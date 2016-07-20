@@ -14,7 +14,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlutils import get_or_create
 import calendar
 
-engine = create_engine('postgresql://postges:joseph@localhose/penaax')
+engine = create_engine('postgresql://postgres:joseph@localhost/penaax')
 
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
@@ -58,16 +58,18 @@ _YEARS = [2012, 2013, 2014, 2015, 2016]
 def build_dates():
     dates = []
     for year in _YEARS:
-        for month in _MONTHS[1:-1]:
+        for month in _MONTHS:
             for day in range(1, calendar.monthrange(year, month)[1]+1):
                 dates.append("{}{}{}".format(year, str(month).zfill(2), str(day).zfill(2)))
     return dates
 
 
-if __name__ == "__main__":
+def main():
     dates = build_dates()
     for date in dates:
         d, c = get_or_create(s, LookupDate, yyyymmdd=date)
     s.commit()
 
-print len(s.query(Game).all())
+if __name__ == "__main__":
+	main()
+	print len(s.query(LookupDate).all())
