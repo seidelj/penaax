@@ -41,7 +41,9 @@ def main():
 	try:
             contentDiv = wait.until(EC.presence_of_element_located((By.ID, 'sbContent')))
 	except TimeoutException:
-            if "There are no games scheduled" in browser.find_element_by_id('scoreboard').text: continue
+            if "There are no games scheduled" in browser.find_element_by_id('scoreboard').text:
+                date.finished = 1
+                continue
         gameTableIds = find_game_tables(browser)
         for gameId in gameTableIds:
             table = browser.find_element_by_id(gameId)
