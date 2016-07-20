@@ -43,6 +43,7 @@ def main():
                 gameInfo.append(parse_row(tableRow))
             game, created = get_or_create(session, Game, gameid=gameId)
             game.parse_info(gameInfo, date.yyyymmdd)
+            session.commit()
         date.finished = 1
         session.commit()
 
