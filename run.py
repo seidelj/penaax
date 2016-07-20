@@ -30,7 +30,7 @@ def parse_row(row):
 def main():
     browser = webdriver.Firefox()
 #This will iterate over yyyymmdd
-    for date in session.query(LookupDate).filter(LookupDate.finished == 0):
+    for date in session.query(LookupDate).filter(LookupDate.finished == 1):
         print date.yyyymmdd
         browser.get(_URL + date.yyyymmdd)
         gameTableIds = find_game_tables(browser)
@@ -43,6 +43,7 @@ def main():
                 gameInfo.append(parse_row(tableRow))
             game, created = get_or_create(session, Game, gameid=gameId)
             game.parse_info(gameInfo, date.yyyymmdd)
+            session.commit()
         date.finished = 1
         session.commit()
 
