@@ -41,7 +41,7 @@ def main():
             gameInfo = []
             for tableRow in tableRows:
                 gameInfo.append(parse_row(tableRow))
-            game, created = get_or_create(session, Game, gameId)
+            game, created = get_or_create(session, Game, gameid=gameId)
             game.parse_info(gameInfo, date.yyyymmdd)
         date.finished = 1
         session.commit()
