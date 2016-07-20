@@ -3,6 +3,9 @@ from selenium import webdriver
 from models import Session, Game, LookupDate
 from pyvirtualdisplay import Display
 from sqlutils import get_or_create
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
 
 display = Display(visible=0, size=(800,600))
 display.start()
@@ -29,10 +32,12 @@ def parse_row(row):
 
 def main():
     browser = webdriver.Firefox()
+    wait = WebDriverWait(browser, 10)
 #This will iterate over yyyymmdd
     for date in session.query(LookupDate).filter(LookupDate.finished == 1):
         print date.yyyymmdd
         browser.get(_URL + date.yyyymmdd)
+        contentDiv = wait.until(EC.presence_of_element_located((By.ID, 'sbContent'))
         gameTableIds = find_game_tables(browser)
         for gameId in gameTableIds:
             table = browser.find_element_by_id(gameId)
