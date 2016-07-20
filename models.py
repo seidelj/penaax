@@ -24,8 +24,8 @@ class Game(Base):
     id = Column(Integer, Sequence("game_id_seq"), primary_key=True)
     home = Column(Integer)
     oppo = Column(String)
-    pens_runs = Column(Integer)
-    oppo_runs = Column(Integer)
+    pens_runs = Column(String)
+    oppo_runs = Column(String)
     gameid = Column(String)
     lookupdate = Column(String)
 
@@ -33,20 +33,20 @@ class Game(Base):
         self.lookupdate = lookupdate
         for i in info:
             if "Pensacola" in i['team']:
-                self.pens_runs = int(i['runs'])
+                self.pens_runs = i['runs']
                 if "home" in i['location']:
                     self.home = 1
                 if "away" in i['location']:
                     self.home = 0
             else:
-                self.oppo_runs = int(i['runs'])
+                self.oppo_runs = i['runs']
                 self.oppo = str(i['team'])
 
 class LookupDate(Base):
     __tablename__ = "date"
     id = Column(Integer, Sequence("game_id_seq"), primary_key=True)
     yyyymmdd = Column(String)
-    finished = Column(Integer, default=0)
+    finished = Column(Integer)
 
 Base.metadata.create_all(engine)
 
