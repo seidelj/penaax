@@ -31,8 +31,8 @@ def main():
     browser = webdriver.Firefox()
 #This will iterate over yyyymmdd
     for date in session.query(LookupDate).filter(LookupDate.finished != 1):
-		print date.yyyymmdd
-		browser.get(_URL + date.yyyymmdd)
+        print date.yyyymmdd
+        browser.get(_URL + date.yyyymmdd)
         gameTableIds = find_game_tables(browser)
         for gameId in gameTableIds:
             table = browser.find_element_by_id(gameId)
