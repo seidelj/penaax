@@ -37,7 +37,9 @@ def main():
     for date in session.query(LookupDate).filter(LookupDate.finished == 1):
         print date.yyyymmdd
         browser.get(_URL + date.yyyymmdd)
-        contentDiv = wait.until(EC.presence_of_element_located((By.ID, 'sbContent'))
+		try:
+			contentDiv = wait.until(EC.presence_of_element_located((By.ID, 'sbContent')))
+		except 
         gameTableIds = find_game_tables(browser)
         for gameId in gameTableIds:
             table = browser.find_element_by_id(gameId)
