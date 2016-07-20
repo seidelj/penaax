@@ -22,7 +22,7 @@ Session = sessionmaker(bind=engine)
 class Game(Base):
     __tablename__ = 'game'
     id = Column(Integer, Sequence("game_id_seq"), primary_key=True)
-    home = Column(Integer)
+    home = Column(String)
     oppo = Column(String)
     pens_runs = Column(String)
     oppo_runs = Column(String)
