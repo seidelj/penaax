@@ -46,7 +46,7 @@ class LookupDate(Base):
     __tablename__ = "date"
     id = Column(Integer, Sequence("game_id_seq"), primary_key=True)
     yyyymmdd = Column(String)
-    finished = Column(Integer)
+    finished = Column(Integer, default=0)
 
 Base.metadata.create_all(engine)
 
