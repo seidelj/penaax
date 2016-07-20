@@ -14,7 +14,7 @@ def write_scoreboard(modelinfo, f):
     header = modelinfo
     writer.writerow(header)
     for game in session.query(Game).all():
-        row = [getattr(game, x) for x in modelInfo]
+        row = [getattr(game, x) for x in modelinfo]
         writer.writerow(row)
 
 def get_field_names():
