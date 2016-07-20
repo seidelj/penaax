@@ -5,6 +5,7 @@ from pyvirtualdisplay import Display
 from sqlutils import get_or_create
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 
 display = Display(visible=0, size=(800,600))
@@ -37,9 +38,10 @@ def main():
     for date in session.query(LookupDate).filter(LookupDate.finished == 1):
         print date.yyyymmdd
         browser.get(_URL + date.yyyymmdd)
-		try:
-			contentDiv = wait.until(EC.presence_of_element_located((By.ID, 'sbContent')))
-		except 
+	try:
+            contentDiv = wait.until(EC.presence_of_element_located((By.ID, 'sbContent')))
+	except TimeoutException:
+            if "There are no games scheduled" in browser.find_element_by_id('scoreboard').text: continue
         gameTableIds = find_game_tables(browser)
         for gameId in gameTableIds:
             table = browser.find_element_by_id(gameId)
